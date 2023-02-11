@@ -9,7 +9,7 @@ using namespace huffman;
 TEST(ByteEncoder, single_node)
 {
 	char buffer[1024];
-	HuffmanNode node{};
+	HuffmanNode node{0, 0};
 	ByteWriter writer(buffer, sizeof(buffer), 0);
 	ByteEncoder encoder(writer, node);
 
@@ -24,8 +24,8 @@ TEST(ByteEncoder, tree)
 {
 	char buffer[1024];
 	HuffmanNode node{
-		{1, 'A'},
-		{1, 'B'}
+		{'A', 1},
+		{'B', 1}
 	};
 
 	ByteWriter writer(buffer, sizeof(buffer), 0);
@@ -41,8 +41,8 @@ TEST(ByteEncoder, tree)
 TEST(ByteEncoder, tree_no_memory)
 {
 	HuffmanNode node{
-		{1, 'A'},
-		{1, 'B'}
+		{'A', 1},
+		{'B', 1}
 	};
 
 	ByteWriter writer(nullptr, 0, 0);
@@ -59,8 +59,8 @@ TEST(ByteEncoder, tree_not_enough_memory)
 {
 	char buffer[1];
 	HuffmanNode node{
-		{1, 'A'},
-		{1, 'B'}
+		{'A', 1},
+		{'B', 1}
 	};
 
 	ByteWriter writer(buffer, sizeof(buffer), 7);

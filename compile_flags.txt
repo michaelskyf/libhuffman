@@ -1,3 +1,0 @@
--Weverything
--std=c++20
--Iinclude

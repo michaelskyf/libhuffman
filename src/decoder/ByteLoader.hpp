@@ -20,7 +20,7 @@ public:
 
 	bool empty() const
 	{
-		return m_bits_processed == m_total_bits;
+		return m_bits_processed >= m_total_bits;
 	}
 
 	char value() const

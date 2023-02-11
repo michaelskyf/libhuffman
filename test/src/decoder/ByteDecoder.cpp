@@ -12,7 +12,7 @@ TEST(decoder_ByteDecoder, decode_null)
 	HuffmanNode root
 	{
 		{'a', 1},
-		{'b', 2}
+		{'b', 2},
 	};
 
 	ByteDecoder decoder(loader, root);

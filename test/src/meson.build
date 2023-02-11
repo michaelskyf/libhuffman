@@ -3,6 +3,7 @@ subdir('encoder')
 
 test_sources = [
     'HuffmanDictionary.cpp',
+	'HuffmanNode.cpp'
 ]
 
 e = executable('huffman', test_sources,

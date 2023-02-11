@@ -6,12 +6,12 @@ project('ppk-project-huffman', 'cpp',
 )
 
 cpp_flags = [
-  '-pedantic',
+
 ]
 
 cpp_warn_blacklist = [
-  '-Wno-suggest-attribute=pure', '-Wno-padded', '-Wno-c++98-compat', '-Wno-c++98-compat-pedantic', '-Wno-newline-eof',
-  '-Wno-global-constructors', '-Wno-strict-overflow', '-Wno-weak-vtables'
+  '-Wno-suggest-attribute=pure', '-Wno-padded', '-Wno-c++98-compat', '-Wno-c++98-compat-pedantic',
+  '-Wno-global-constructors', '-Wno-newline-eof'
 ]
 
 compiler = meson.get_compiler('cpp')

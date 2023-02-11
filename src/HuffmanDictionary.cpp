@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <queue>
+#include <algorithm>
 
 #include <HuffmanDictionary.hpp>
 #include "HuffmanNode.hpp"
@@ -15,13 +16,14 @@
 #include "encoder/ByteWriter.hpp"
 #include "encoder/ByteEncoder.hpp"
 
+
 namespace huffman
 {
 
 namespace
 {
 
-using frequency_queue = std::priority_queue<HuffmanNode, std::vector<HuffmanNode>, std::greater_equal<HuffmanNode>>;
+using frequency_queue = std::vector<HuffmanNode>;
 
 void get_frequencies(std::array<size_t, 256>& array, const char* src, size_t src_size)
 {
@@ -50,33 +52,35 @@ void get_frequencies(std::array<size_t, 256>& array, const HuffmanNode& node)
 
 HuffmanNode makeTreeNode(frequency_queue& frequencies)
 {
-	std::array<HuffmanNode, 2> child_nodes;
+	HuffmanNode child_left = std::move(frequencies[0]);
+	HuffmanNode child_right = std::move(frequencies[1]);
+	
+	frequencies.erase(frequencies.begin(), frequencies.begin()+2);
 
-	child_nodes[0] = std::move(const_cast<HuffmanNode&>(frequencies.top()));
-	frequencies.pop();
+	printf("Left: 0x%x, Right: 0x%x\n", child_left.byte(), child_right.byte());
 
-	child_nodes[1] = std::move(const_cast<HuffmanNode&>(frequencies.top()));
-	frequencies.pop();
-
-	return {std::move(child_nodes[0]), std::move(child_nodes[1])};
+	return {std::move(child_left), std::move(child_right)};
 }
 
 HuffmanNode make_huffman_tree(frequency_queue& frequencies)
 {
-	HuffmanNode result{};
-
 	if(frequencies.size() == 0)
 	{
-		return result;
+		return {0, 0};
 	}
 
 	while(frequencies.size() > 1)
 	{
 		auto new_node = makeTreeNode(frequencies);
-		frequencies.emplace(std::move(new_node));
+
+		frequencies.insert(std::find_if(frequencies.begin(),
+									frequencies.end(),
+									[&](const HuffmanNode& n)
+									{ return n.frequency() >= new_node.frequency(); }),
+									std::move(new_node));
 	}
 
-	result = std::move(const_cast<HuffmanNode&>(frequencies.top()));
+	HuffmanNode result = std::move(frequencies.front());
 
 	return result;
 }
@@ -90,7 +94,7 @@ HuffmanDictionary::HuffmanDictionary(const char* src, size_t src_size)
 
 void HuffmanDictionary::create(const char* src, size_t src_size)
 {
-	m_root = {};
+	m_root = {0, 0};
 	create_part(src, src_size);
 }
 
@@ -117,7 +121,11 @@ void HuffmanDictionary::create_part(const char* src, size_t src_size)
 		// Trim bytes that do not appear
 		if(freq > 0)
 		{
-			frequencies.emplace(freq, static_cast<char>(i));
+			frequencies.emplace(std::find_if(frequencies.begin(),
+								frequencies.end(),
+								[&](const HuffmanNode& n)
+								{ return n.frequency() >= freq; }),
+								static_cast<char>(i), freq);
 		}
 	}
 
