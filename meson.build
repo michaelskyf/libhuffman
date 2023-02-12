@@ -19,7 +19,7 @@ cpp_all_flags = cpp_flags + cpp_warn_blacklist
 
 foreach f :cpp_all_flags
   if compiler.has_argument(f)
-    add_global_arguments(f, language : 'cpp')
+    add_project_arguments(f, language : 'cpp')
   endif
 endforeach
 
