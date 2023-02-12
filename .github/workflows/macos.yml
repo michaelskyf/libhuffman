@@ -30,11 +30,11 @@ jobs:
         run: brew install python3; sudo pip3 install meson ninja
 
       - name: Run Meson
-        run: CXX=${{matrix.compiler}} meson setup build -Db_sanitize=address -Dexe=disabled
+        run: CXX=${{matrix.compiler}} meson setup build -Db_sanitize=address
 
       - name: Compile and run tests
         id: runTests
-        run: ninja -C build test  
+        run: ninja -C build test
 
       - name: Read logs
         if: success() || failure()

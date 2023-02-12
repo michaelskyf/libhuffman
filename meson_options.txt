@@ -1,9 +1,3 @@
-option('exe',
-  type : 'feature',
-  value : 'disabled',
-  description : 'Build the main executable.'
-)
-
 option('tests',
   type : 'feature',
   value : 'enabled',

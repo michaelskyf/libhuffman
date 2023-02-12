@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Checkout respository
         uses: actions/checkout@v3
-      
+
       - name: Add MSVC dev cmd
         uses: ilammy/msvc-dev-cmd@v1
 
@@ -36,11 +36,11 @@ jobs:
         run: choco install python; pip3 install meson ninja
 
       - name: Run Meson
-        run: cmd /v /c "set CXX=${{matrix.compiler.cxx}} && set CXX_LD=${{matrix.compiler.ld}} && meson setup build -Dexe=disabled"
+        run: cmd /v /c "set CXX=${{matrix.compiler.cxx}} && set CXX_LD=${{matrix.compiler.ld}} && meson setup build"
 
       - name: Compile and run tests
         id: runTests
-        run: ninja -C build test  
+        run: ninja -C build test
 
       - name: Read logs
         if: success() || failure()

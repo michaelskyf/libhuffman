@@ -1,4 +1,4 @@
-project('ppk-project-huffman', 'cpp',
+project('libhuffman', 'cpp',
     version : '1.0',
     license : 'gpl',
     meson_version : '>= 0.61.2',
