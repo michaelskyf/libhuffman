@@ -38,8 +38,10 @@ jobs:
       - name: Run Meson
         run: cmd /v /c "set CXX=${{matrix.compiler.cxx}} && set CXX_LD=${{matrix.compiler.ld}} && meson setup build"
 
-      - name: Compile and run tests
-        id: runTests
+      - name: Compile the project
+        run: ninja -C build
+
+      - name: Run tests
         run: ninja -C build test
 
       - name: Read logs

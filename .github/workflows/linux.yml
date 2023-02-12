@@ -32,8 +32,10 @@ jobs:
       - name: Run Meson
         run: CXX=${{matrix.compiler}} meson setup build -Db_sanitize=address
 
-      - name: Compile and run tests
-        id: runTests
+      - name: Compile the project
+        run: ninja -C build
+
+      - name: Run tests
         run: ninja -C build test
 
       - name: Read logs
