@@ -25,6 +25,129 @@ int main()
 
 using namespace huffman;
 
+namespace
+{
+
+void compare_trees(const HuffmanNode& lhs, const HuffmanNode& rhs)
+{
+	EXPECT_EQ(lhs.is_byte_node(), rhs.is_byte_node());
+	if(lhs.is_byte_node() != rhs.is_byte_node())
+	{
+		return;
+	}
+
+	bool is_byte_node = lhs.is_byte_node();
+
+	if(is_byte_node)
+	{
+		EXPECT_EQ(lhs.byte(), rhs.byte());
+		EXPECT_EQ(lhs.frequency(), rhs.frequency());
+	}
+	else
+	{
+		compare_trees(*lhs.left(), *rhs.left());
+		compare_trees(*lhs.right(), *rhs.right());
+	}
+}
+
+} // namespace
+
+TEST(HuffmanDictionary, decode_tree)
+{
+	HuffmanNode root_node{
+		{'a', 7},
+		{
+			{'b', 3}, {'c', 1}
+		}
+	};
+
+	std::string src = "\x7F\x15";
+	HuffmanDictionary dictionary(root_node);
+	std::string dst(dictionary.size(), 0);
+
+	auto[src_read, dst_written] = dictionary.decode(src.data(), src.size(), dst.data(), dst.size(), 0);
+
+	EXPECT_EQ(src_read, 15);
+	EXPECT_EQ(dst_written, 11);
+	EXPECT_EQ(dst, "aaaaaaabbbc");
+}
+
+TEST(HuffmanDictionary, decode_tree_partially)
+{
+	HuffmanNode root_node{
+		{'a', 7},
+		{
+			{'b', 3}, {'c', 1}
+		}
+	};
+
+	std::string src = "\x7F\x15";
+	HuffmanDictionary dictionary(root_node);
+	std::string dst(dictionary.size(), 0);
+
+	auto[src_read, dst_written] = dictionary.decode(src.data(), 1, dst.data(), dst.size(), 0);
+
+	EXPECT_EQ(src_read, 7);
+	EXPECT_EQ(dst_written, 7);
+	EXPECT_STREQ(dst.c_str(), "aaaaaaa");
+}
+
+TEST(HuffmanDictionary, encode_tree)
+{
+	HuffmanNode root_node{
+		{'a', 7},
+		{
+			{'b', 3}, {'c', 1}
+		}
+	};
+
+	std::string src = "aaaaaaabbbc";
+	HuffmanDictionary dictionary(root_node);
+	std::string dst(dictionary.size(), 0);
+
+	auto[src_read, dst_written] = dictionary.encode(src.data(), src.size(), dst.data(), dst.size(), 0);
+
+	EXPECT_EQ(src_read, 11);
+	EXPECT_EQ(dst_written, 15);
+	EXPECT_STREQ(dst.c_str(), "\x7F\x15");
+}
+
+TEST(HuffmanDictionary, encode_tree_partially)
+{
+	HuffmanNode root_node{
+		{'a', 7},
+		{
+			{'b', 3}, {'c', 1}
+		}
+	};
+
+	std::string src = "aaaaaaabbbc";
+	HuffmanDictionary dictionary(root_node);
+	std::string dst(dictionary.size(), 0);
+
+	auto[src_read, dst_written] = dictionary.encode(src.data(), src.size(), dst.data(), 1, 0);
+
+	EXPECT_EQ(src_read, 7);
+	EXPECT_EQ(dst_written, 7);
+	EXPECT_STREQ(dst.c_str(), "\x7F");
+}
+
+
+TEST(HuffmanDictionary, create_from_existing_tree)
+{
+	HuffmanNode root_node{
+		{'a', 7},
+		{
+			{'b', 3},
+			{'c', 1}
+		}
+	};
+
+	HuffmanDictionary dictionary(root_node);
+
+	compare_trees(dictionary.data(), root_node);
+}
+
 TEST(HuffmanDictionary, create_empty)
 {
 	HuffmanDictionary dictionary;
