@@ -16,14 +16,10 @@
 #include "encoder/ByteWriter.hpp"
 #include "encoder/ByteEncoder.hpp"
 
-
-namespace huffman
-{
-
 namespace
 {
 
-using frequency_queue = std::vector<HuffmanNode>;
+using frequency_queue = std::vector<huffman::HuffmanNode>;
 
 void get_frequencies(std::array<size_t, 256>& array, const char* src, size_t src_size)
 {
@@ -35,7 +31,7 @@ void get_frequencies(std::array<size_t, 256>& array, const char* src, size_t src
 	}
 }
 
-void get_frequencies(std::array<size_t, 256>& array, const HuffmanNode& node)
+void get_frequencies(std::array<size_t, 256>& array, const huffman::HuffmanNode& node)
 {
 	if(node.is_byte_node())
 	{
@@ -50,17 +46,17 @@ void get_frequencies(std::array<size_t, 256>& array, const HuffmanNode& node)
 	}
 }
 
-HuffmanNode makeTreeNode(frequency_queue& frequencies)
+huffman::HuffmanNode makeTreeNode(frequency_queue& frequencies)
 {
-	HuffmanNode child_left = std::move(frequencies[0]);
-	HuffmanNode child_right = std::move(frequencies[1]);
+	huffman::HuffmanNode child_left = std::move(frequencies[0]);
+	huffman::HuffmanNode child_right = std::move(frequencies[1]);
 
 	frequencies.erase(frequencies.begin(), frequencies.begin()+2);
 
 	return {std::move(child_left), std::move(child_right)};
 }
 
-HuffmanNode make_huffman_tree(frequency_queue& frequencies)
+huffman::HuffmanNode make_huffman_tree(frequency_queue& frequencies)
 {
 	if(frequencies.size() == 0)
 	{
@@ -73,17 +69,20 @@ HuffmanNode make_huffman_tree(frequency_queue& frequencies)
 
 		frequencies.emplace(std::find_if(frequencies.begin(),
 									frequencies.end(),
-									[&](const HuffmanNode& n)
+									[&](const huffman::HuffmanNode& n)
 									{ return n.frequency() >= new_node.frequency(); }),
 									std::move(new_node));
 	}
 
-	HuffmanNode result = std::move(frequencies.front());
+	huffman::HuffmanNode result = std::move(frequencies.front());
 
 	return result;
 }
 
-} // unnamed namespace
+} // namespace
+
+namespace huffman
+{
 
 HuffmanDictionary::HuffmanDictionary(const char* src, size_t src_size)
 {

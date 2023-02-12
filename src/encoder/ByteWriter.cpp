@@ -20,7 +20,7 @@ std::pair<char, size_t> encode_byte(char byte, size_t bits_set, uint64_t& code, 
 	return {real_byte, bits_set + bits_written};
 }
 
-} // unnamed namespace
+} // namespace
 
 namespace huffman::encoder
 {

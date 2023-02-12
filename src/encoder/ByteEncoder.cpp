@@ -32,7 +32,7 @@ void make_lookup_table(const huffman::HuffmanNode& node, std::array<std::pair<ui
 	}
 }
 
-}
+} // namespace
 
 namespace huffman::encoder
 {
