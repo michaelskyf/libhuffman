@@ -14,8 +14,6 @@ public:
 	HuffmanNode(const HuffmanNode& other);
 	HuffmanNode& operator=(HuffmanNode&& other) noexcept;
 
-	
-
 	bool is_byte_node() const;
 	size_t frequency() const;
 	char byte() const;

@@ -57,8 +57,6 @@ HuffmanNode makeTreeNode(frequency_queue& frequencies)
 	
 	frequencies.erase(frequencies.begin(), frequencies.begin()+2);
 
-	printf("Left: 0x%x, Right: 0x%x\n", child_left.byte(), child_right.byte());
-
 	return {std::move(child_left), std::move(child_right)};
 }
 
@@ -73,7 +71,7 @@ HuffmanNode make_huffman_tree(frequency_queue& frequencies)
 	{
 		auto new_node = makeTreeNode(frequencies);
 
-		frequencies.insert(std::find_if(frequencies.begin(),
+		frequencies.emplace(std::find_if(frequencies.begin(),
 									frequencies.end(),
 									[&](const HuffmanNode& n)
 									{ return n.frequency() >= new_node.frequency(); }),
