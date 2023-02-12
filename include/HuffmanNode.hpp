@@ -13,6 +13,7 @@ public:
 	HuffmanNode(HuffmanNode&& other) noexcept;
 	HuffmanNode(const HuffmanNode& other);
 	HuffmanNode& operator=(HuffmanNode&& other) noexcept;
+	HuffmanNode& operator=(const HuffmanNode& other) noexcept;
 
 	bool is_byte_node() const;
 	size_t frequency() const;

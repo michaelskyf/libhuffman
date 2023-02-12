@@ -40,7 +40,7 @@ void get_frequencies(std::array<size_t, 256>& array, const HuffmanNode& node)
 	if(node.is_byte_node())
 	{
 		unsigned char index = static_cast<unsigned char>(node.byte());
-		
+
 		array[index] += node.frequency();
 	}
 	else
@@ -54,7 +54,7 @@ HuffmanNode makeTreeNode(frequency_queue& frequencies)
 {
 	HuffmanNode child_left = std::move(frequencies[0]);
 	HuffmanNode child_right = std::move(frequencies[1]);
-	
+
 	frequencies.erase(frequencies.begin(), frequencies.begin()+2);
 
 	return {std::move(child_left), std::move(child_right)};
@@ -90,13 +90,18 @@ HuffmanDictionary::HuffmanDictionary(const char* src, size_t src_size)
 	create(src, src_size);
 }
 
+HuffmanDictionary::HuffmanDictionary(const HuffmanNode& root)
+{
+	m_root = root;
+}
+
 void HuffmanDictionary::create(const char* src, size_t src_size)
 {
 	m_root = {0, 0};
 	create_part(src, src_size);
 }
 
-constexpr const HuffmanNode& HuffmanDictionary::data() const
+const HuffmanNode& HuffmanDictionary::data() const
 {
 	return m_root;
 }

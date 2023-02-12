@@ -30,7 +30,7 @@ public:
 	 * @throws				std::bad_alloc
 	 */
 	void create_part(const char* data, size_t size);
-	
+
 	/**
 	 * @brief				get sum of all frequencies in the dictionary
 	 * @returns 			0 if the tree is not initialized, otherwise sum of all frequencies in the tree
@@ -50,7 +50,7 @@ public:
 	 * @returns				nullptr if the tree is not initialized, otherwise a pointer to the root node
 	 * @throws				nothing
 	 */
-	constexpr const HuffmanNode& data() const;
+	const HuffmanNode& data() const;
 
 	/**
 	 * @brief						create a new dictionary (if not already initialized) and encode the data according to it

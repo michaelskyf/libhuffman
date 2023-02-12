@@ -31,11 +31,13 @@ HuffmanNode::HuffmanNode(HuffmanNode&& other) noexcept
 HuffmanNode::HuffmanNode(const HuffmanNode& other)
 	: m_frequency{other.m_frequency},
 	  m_is_byte_node{other.m_is_byte_node},
-	  m_byte{other.m_byte},
-	  m_left{std::make_unique<HuffmanNode>(std::move(*other.m_left))},
-	  m_right{std::make_unique<HuffmanNode>(std::move(*other.m_right))}
+	  m_byte{other.m_byte}
 {
-
+	if(!other.is_byte_node())
+	{
+		m_left = std::make_unique<HuffmanNode>(*other.m_left);
+		m_right = std::make_unique<HuffmanNode>(*other.m_right);
+	}
 }
 
 HuffmanNode& HuffmanNode::operator=(HuffmanNode&& other) noexcept
@@ -45,6 +47,21 @@ HuffmanNode& HuffmanNode::operator=(HuffmanNode&& other) noexcept
 	m_byte = other.m_byte;
 	m_left = std::move(other.m_left);
 	m_right = std::move(other.m_right);
+
+	return *this;
+}
+
+HuffmanNode& HuffmanNode::operator=(const HuffmanNode& other) noexcept
+{
+	m_frequency = other.m_frequency;
+	m_is_byte_node = other.m_is_byte_node;
+	m_byte = other.m_byte;
+
+	if(!other.is_byte_node())
+	{
+		m_left = std::make_unique<HuffmanNode>(*other.m_left);
+		m_right = std::make_unique<HuffmanNode>(*other.m_right);
+	}
 
 	return *this;
 }
