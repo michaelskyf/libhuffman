@@ -2,7 +2,7 @@ project('libhuffman', 'cpp',
     version : '1.0',
     license : 'gpl',
     meson_version : '>= 0.61.2',
-    default_options : [ 'warning_level=everything', 'buildtype=debug', 'cpp_std=c++20', 'werror=false' ]
+    default_options : [ 'warning_level=everything', 'buildtype=debugoptimized', 'cpp_std=c++20', 'werror=false' ]
 )
 
 cpp_flags = [

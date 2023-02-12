@@ -67,16 +67,15 @@ huffman::HuffmanNode make_huffman_tree(frequency_queue& frequencies)
 	{
 		auto new_node = makeTreeNode(frequencies);
 
-		frequencies.emplace(std::find_if(frequencies.begin(),
+		auto node_position = std::find_if(frequencies.begin(),
 									frequencies.end(),
 									[&](const huffman::HuffmanNode& n)
-									{ return n.frequency() >= new_node.frequency(); }),
-									std::move(new_node));
+									{ return n.frequency() >= new_node.frequency(); });
+
+		frequencies.emplace(node_position, std::move(new_node));
 	}
 
-	huffman::HuffmanNode result = std::move(frequencies.front());
-
-	return result;
+	return std::move(frequencies.front());
 }
 
 } // namespace
@@ -123,11 +122,12 @@ void HuffmanDictionary::create_part(const char* src, size_t src_size)
 		// Trim bytes that do not appear
 		if(freq > 0)
 		{
-			frequencies.emplace(std::find_if(frequencies.begin(),
-								frequencies.end(),
-								[&](const HuffmanNode& n)
-								{ return n.frequency() >= freq; }),
-								static_cast<char>(i), freq);
+			auto node_position = std::find_if(frequencies.begin(),
+									frequencies.end(),
+									[&](const huffman::HuffmanNode& n)
+									{ return n.frequency() >= freq; });
+
+			frequencies.emplace(node_position, static_cast<char>(i), freq);
 		}
 	}
 

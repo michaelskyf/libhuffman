@@ -132,6 +132,19 @@ TEST(HuffmanDictionary, encode_tree_partially)
 	EXPECT_STREQ(dst.c_str(), "\x7F");
 }
 
+TEST(HuffmanDictionary, create_part_tree)
+{
+	HuffmanNode test_tree{
+		{ {'c', 1}, {'b', 3} },
+		{'a', 7},
+	};
+	std::string test_data[] = {"aaaaaaa", "bbbc"};
+	HuffmanDictionary dictionary(test_data[0].data(), test_data[0].size());
+
+	dictionary.create_part(test_data[1].data(), test_data[1].size());
+
+	compare_trees(dictionary.data(), test_tree);
+}
 
 TEST(HuffmanDictionary, create_from_existing_tree)
 {
@@ -170,6 +183,17 @@ TEST(HuffmanDictionary, constructor)
 {
 	std::string test_data = "A" "BB" "CCC" "DDDD" "EEEEE" "FFFFFF" "GGGGGGG";
 	HuffmanDictionary dictionary(test_data.data(), test_data.size());
+
+	EXPECT_FALSE(dictionary.empty());
+	EXPECT_EQ(dictionary.size(), 28);
+}
+
+TEST(HuffmanDictionary, create_part)
+{
+	std::string test_data[] = {"A" "BB" "CCC" "DDDD",  "EEEEE" "FFFFFF" "GGGGGGG"};
+	HuffmanDictionary dictionary(test_data[0].data(), test_data[0].size());
+
+	dictionary.create_part(test_data[1].data(), test_data[1].size());
 
 	EXPECT_FALSE(dictionary.empty());
 	EXPECT_EQ(dictionary.size(), 28);
