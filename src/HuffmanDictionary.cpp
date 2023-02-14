@@ -1,16 +1,8 @@
 #include <array>
-#include <cstdint>
-#include <cstring>
-#include <functional>
-#include <limits>
-#include <memory>
 #include <vector>
-#include <iostream>
-#include <queue>
-#include <algorithm>
 
-#include <HuffmanDictionary.hpp>
-#include "HuffmanNode.hpp"
+#include <huffman/HuffmanDictionary.hpp>
+#include <huffman/HuffmanNode.hpp>
 #include "decoder/ByteLoader.hpp"
 #include "decoder/ByteDecoder.hpp"
 #include "encoder/ByteWriter.hpp"

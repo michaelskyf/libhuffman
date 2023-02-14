@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "HuffmanNode.hpp"
+#include "huffman/HuffmanNode.hpp"
 
 namespace huffman
 {

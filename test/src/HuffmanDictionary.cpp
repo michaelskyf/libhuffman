@@ -1,4 +1,4 @@
-#include <HuffmanDictionary.hpp>
+#include <huffman/HuffmanDictionary.hpp>
 #include <gtest/gtest.h>
 
 /**

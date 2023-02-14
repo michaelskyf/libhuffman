@@ -1,4 +1,4 @@
-#include "HuffmanNode.hpp"
+#include "huffman/HuffmanNode.hpp"
 #include "encoder/ByteWriter.hpp"
 #include <encoder/ByteEncoder.hpp>
 #include <gtest/gtest.h>

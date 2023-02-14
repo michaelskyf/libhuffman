@@ -1,6 +1,6 @@
 #pragma once
 
-#include <HuffmanNode.hpp>
+#include <huffman/HuffmanNode.hpp>
 #include "ByteLoader.hpp"
 
 namespace huffman::decoder

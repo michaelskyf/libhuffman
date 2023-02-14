@@ -1,5 +1,5 @@
 #include <array>
-#include "HuffmanNode.hpp"
+#include "huffman/HuffmanNode.hpp"
 #include "ByteEncoder.hpp"
 #include "ByteWriter.hpp"
 #include "encoder/ByteEncoder.hpp"

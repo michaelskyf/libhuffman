@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include "HuffmanNode.hpp"
+#include "huffman/HuffmanNode.hpp"
 #include "encoder/ByteWriter.hpp"
 
 namespace huffman::encoder

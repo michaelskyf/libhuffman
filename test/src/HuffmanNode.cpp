@@ -1,4 +1,4 @@
-#include <HuffmanNode.hpp>
+#include <huffman/HuffmanNode.hpp>
 #include <gtest/gtest.h>
 
 using namespace huffman;
