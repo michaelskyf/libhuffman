@@ -13,6 +13,13 @@ public:
 	HuffmanDictionary() = default;
 	HuffmanDictionary(const HuffmanNode& root);
 	HuffmanDictionary(const char* data, size_t size);
+
+	HuffmanDictionary(HuffmanDictionary&&) noexcept = default;
+	HuffmanDictionary& operator=(HuffmanDictionary&&) noexcept = default;
+
+	HuffmanDictionary(const HuffmanDictionary&) noexcept = default;
+	HuffmanDictionary& operator=(const HuffmanDictionary&) noexcept = default;
+
 	~HuffmanDictionary() = default;
 
 	/**

@@ -23,8 +23,6 @@ foreach f :cpp_all_flags
   endif
 endforeach
 
-add_project_arguments('-DVERSION="@0@"'.format(meson.project_version()), language : 'cpp')
-
 inc = [ include_directories('include', get_option('includedir')) ]
 
 subdir('src')
